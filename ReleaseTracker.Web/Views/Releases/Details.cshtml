@@ -1,0 +1,105 @@
+@model ReleaseTracker.Web.Models.Release
+
+@{
+    ViewData["Title"] = "Release Details";
+}
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <h2>Release: @Model.Version</h2>
+            <p class="text-muted">for @Model.App?.Name</p>
+        </div>
+        <div class="col-md-6 text-end">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Release Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-5">Application</dt>
+                        <dd class="col-sm-7">
+                            <a asp-controller="Apps" asp-action="Details" asp-route-id="@Model.AppId">
+                                @Model.App?.Name
+                            </a>
+                        </dd>
+
+                        <dt class="col-sm-5">Version</dt>
+                        <dd class="col-sm-7"><span class="badge bg-dark">@Model.Version</span></dd>
+
+                        <dt class="col-sm-5">Environment</dt>
+                        <dd class="col-sm-7"><span class="badge bg-secondary">@Model.Environment</span></dd>
+
+                        <dt class="col-sm-5">Status</dt>
+                        <dd class="col-sm-7">
+                            <status-badge value="@Model.Status" />
+                        </dd>
+
+                        <dt class="col-sm-5">Release Date</dt>
+                        <dd class="col-sm-7">@Model.ReleaseDate.ToString("MMMM dd, yyyy h:mm tt")</dd>
+
+                        <dt class="col-sm-5">Released By</dt>
+                        <dd class="col-sm-7">@Model.ReleasedBy</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Audit Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-5">Created Date</dt>
+                        <dd class="col-sm-7">@Model.CreatedDate.ToString("MMMM dd, yyyy h:mm tt")</dd>
+
+                        <dt class="col-sm-5">Created By</dt>
+                        <dd class="col-sm-7">@(Model.CreatedBy ?? "Unknown")</dd>
+
+                        @if (Model.ModifiedDate.HasValue)
+                        {
+                            <dt class="col-sm-5">Last Modified</dt>
+                            <dd class="col-sm-7">@Model.ModifiedDate.Value.ToString("MMMM dd, yyyy h:mm tt")</dd>
+
+                            <dt class="col-sm-5">Modified By</dt>
+                            <dd class="col-sm-7">@(Model.ModifiedBy ?? "Unknown")</dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">Description</h5>
+            </div>
+            <div class="card-body">
+                <p>@Model.Description</p>
+            </div>
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.ReleaseNotes))
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">Release Notes</h5>
+            </div>
+            <div class="card-body">
+                <pre style="white-space: pre-wrap; font-family: inherit;">@Model.ReleaseNotes</pre>
+            </div>
+        </div>
+    }
+</div>

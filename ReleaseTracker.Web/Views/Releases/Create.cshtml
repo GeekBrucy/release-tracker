@@ -1,0 +1,106 @@
+@model ReleaseTracker.Web.Models.Release
+
+@{
+    ViewData["Title"] = "Create Release";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <h2>Create New Release</h2>
+            <hr />
+
+            <form asp-action="Create" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AppId" class="form-label">Application <span class="text-danger">*</span></label>
+                        <select asp-for="AppId" class="form-select" asp-items="ViewBag.Apps" required>
+                            <option value="">-- Select Application --</option>
+                        </select>
+                        <span asp-validation-for="AppId" class="text-danger"></span>
+                        <div class="form-text">Choose which application this release is for</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Version" class="form-label">Version <span class="text-danger">*</span></label>
+                        <input asp-for="Version" class="form-control" placeholder="e.g., 1.2.0" required />
+                        <span asp-validation-for="Version" class="text-danger"></span>
+                        <div class="form-text">Release version number</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Environment" class="form-label">Environment <span class="text-danger">*</span></label>
+                        <select asp-for="Environment" class="form-select" asp-items="ViewBag.Environments" required>
+                            <option value="">-- Select Environment --</option>
+                        </select>
+                        <span asp-validation-for="Environment" class="text-danger"></span>
+                        <div class="form-text">Where is this being released?</div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Status" class="form-label">Status <span class="text-danger">*</span></label>
+                        <select asp-for="Status" class="form-select" asp-items="ViewBag.Statuses" required>
+                            <option value="">-- Select Status --</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                        <div class="form-text">Current release status</div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="ReleaseDate" class="form-label">Release Date <span class="text-danger">*</span></label>
+                        <input asp-for="ReleaseDate" type="datetime-local" class="form-control" required />
+                        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ReleasedBy" class="form-label">Released By <span class="text-danger">*</span></label>
+                    <input asp-for="ReleasedBy" class="form-control" placeholder="Your name" required />
+                    <span asp-validation-for="ReleasedBy" class="text-danger"></span>
+                    <div class="form-text">Who is responsible for this release?</div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Brief summary of this release..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ReleaseNotes" class="form-label">Release Notes</label>
+                    <textarea asp-for="ReleaseNotes" class="form-control" rows="6" placeholder="Detailed release notes, changes, bug fixes, new features, etc..."></textarea>
+                    <span asp-validation-for="ReleaseNotes" class="text-danger"></span>
+                    <div class="form-text">Document what's included in this release</div>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-check-circle"></i> Create Release
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // Set default datetime to now
+        document.addEventListener('DOMContentLoaded', function() {
+            var releaseDateInput = document.querySelector('input[type="datetime-local"]');
+            if (releaseDateInput && !releaseDateInput.value) {
+                var now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                releaseDateInput.value = now.toISOString().slice(0, 16);
+            }
+        });
+    </script>
+}

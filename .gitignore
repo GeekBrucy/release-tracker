@@ -14,7 +14,8 @@
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
-[Rr]eleases/
+[Rr]eleases/*
+!ReleaseTracker.Web/Views/Releases/
 x64/
 x86/
 [Aa][Rr][Mm]/
