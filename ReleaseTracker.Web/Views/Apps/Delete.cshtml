@@ -1,0 +1,50 @@
+@model ReleaseTracker.Web.Models.App
+
+@{
+    ViewData["Title"] = "Deactivate Application";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="text-danger">Deactivate Application</h2>
+            <hr />
+
+            <div class="alert alert-warning">
+                <h5>Are you sure you want to deactivate this application?</h5>
+                <p>This will hide the application from the active list, but all data will be preserved. You can reactivate it later if needed.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Application Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8">@Model.Name</dd>
+
+                        <dt class="col-sm-4">Description</dt>
+                        <dd class="col-sm-8">@(Model.Description ?? "No description")</dd>
+
+                        <dt class="col-sm-4">Created Date</dt>
+                        <dd class="col-sm-8">@Model.CreatedDate.ToString("MMMM dd, yyyy")</dd>
+
+                        <dt class="col-sm-4">Created By</dt>
+                        <dd class="col-sm-8">@Model.CreatedBy</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <form asp-action="Delete" class="mt-3">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-x-circle"></i> Deactivate Application
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
