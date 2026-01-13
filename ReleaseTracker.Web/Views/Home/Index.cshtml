@@ -96,24 +96,7 @@
                                             <td><span class="badge bg-dark">@release.Version</span></td>
                                             <td><span class="badge bg-secondary">@release.Environment</span></td>
                                             <td>
-                                                @switch (release.Status)
-                                                {
-                                                    case "Completed":
-                                                        <span class="badge bg-success">@release.Status</span>
-                                                        break;
-                                                    case "In Progress":
-                                                        <span class="badge bg-primary">@release.Status</span>
-                                                        break;
-                                                    case "Planned":
-                                                        <span class="badge bg-info">@release.Status</span>
-                                                        break;
-                                                    case "Rolled Back":
-                                                        <span class="badge bg-danger">@release.Status</span>
-                                                        break;
-                                                    default:
-                                                        <span class="badge bg-secondary">@release.Status</span>
-                                                        break;
-                                                }
+                                                <status-badge value="@release.Status" />
                                             </td>
                                             <td>@release.ReleaseDate.ToString("MMM dd, yyyy")</td>
                                             <td>@release.ReleasedBy</td>

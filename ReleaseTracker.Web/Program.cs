@@ -14,6 +14,9 @@ builder.Services.AddHttpContextAccessor();
 // Register UserService
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Register StatusStyleService
+builder.Services.AddSingleton<IStatusStyleService, StatusStyleService>();
+
 // Configure Entity Framework Core with SQL Server
 builder.Services.AddDbContext<ReleaseTrackerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
